@@ -1,5 +1,6 @@
-package com.example.correspondencia
+package com.example.correspondencia.screens
 
+import android.annotation.SuppressLint
 import  android.os.Bundle
 import android.widget.Spinner
 import androidx.activity.ComponentActivity
@@ -29,46 +30,49 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.painterResource
-import com.example.pantalla222.R
-//import com.example.correspondencia.ui.theme.CorrespondenciaTheme
-import com.example.pantalla222.ui.theme.Pantalla222Theme
+import com.example.correspondencia.R
+import com.example.correspondencia.ui.theme.CorrespondenciaTheme
 
-private val messages: List<MyMessage> = listOf(
-    MyMessage("Entrega del paquete", "Para: Andres", "De: Exito"),
+private val messages: List<MyMessage2> = listOf(
+    MyMessage2("Entrega del paquete", "Para: Andres", "De: Exito"),
 )
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            CorrespondenciaTheme {
-                MyMessages(messages)
-            }
-        }
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+fun pantalla2(){
+    Scaffold (){
+        SecondBodyContent()
     }
 }
-data class MyMessage(val tittle: String, val by: String, val from: String)
+@Composable
+fun SecondBodyContent(){
+    MyMessages2(messages)
+}
+data class MyMessage2(val tittle: String, val by: String, val from: String)
+
+
 
 @Composable
-fun MyMessages(message: List<MyMessage>){
+fun MyMessages2(message: List<MyMessage2>){
     LazyColumn{
         items(message){ message ->
-            MyComponent(message)
+            MyComponent2(message)
         }
     }
 }
 
 @Composable
-fun MyComponent(message: MyMessage,){
+fun MyComponent2(message: MyMessage2,){
     Row (modifier = Modifier
         .padding(8.dp)
         .background(MaterialTheme.colors.background)) {
-        MyImage()
-        MyTexts(message)
+        MyImage2()
+        MyTexts2(message)
     }
 }
 
 @Composable
-fun MyImage(){
+fun MyImage2(){
     Image(
         painterResource(R.drawable.ic_launcher_foreground),
         "Mi imagen de prueba",
@@ -81,25 +85,27 @@ fun MyImage(){
 }
 
 @Composable
-fun MyTexts(message: MyMessage){
+fun MyTexts2(message: MyMessage2){
     var expanded = false
-    Column(modifier = Modifier.padding(start=8.dp).clickable{
-        expanded = !expanded
-    }) {
-        MyText(
+    Column(modifier = Modifier
+        .padding(start = 8.dp)
+        .clickable {
+            expanded = !expanded
+        }) {
+        MyText2(
             message.tittle,
             MaterialTheme.colors.primaryVariant,
             MaterialTheme.typography.subtitle1
         )
         //este para generar espacio entre las columnas
         Spacer(modifier = Modifier.height(16.dp))
-        MyText(
+        MyText2(
             message.by,
             MaterialTheme.colors.onBackground,
             MaterialTheme.typography.subtitle2,
             if (expanded) Int.MAX_VALUE else 1
         )
-        MyText(
+        MyText2(
             message.from,
             MaterialTheme.colors.onBackground,
             MaterialTheme.typography.subtitle2,
@@ -135,16 +141,14 @@ fun MyTexts(message: MyMessage){
 }
 
 @Composable
-fun MyText(text: String, color: androidx.compose.ui.graphics.Color, style: androidx.compose.ui.text.TextStyle, lines:Int =Int.MAX_VALUE){
+fun MyText2(text: String, color: androidx.compose.ui.graphics.Color, style: androidx.compose.ui.text.TextStyle, lines:Int =Int.MAX_VALUE){
     Text(text, color = color, style = style, maxLines = lines)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    Pantalla222Theme {
-        MyMessages(messages)
-    }
+fun DefaultPreview2() {
+        pantalla2()
     // CorrespondenciaTheme {
     //      Greeting("Android")
     //   Spinner(itemList = names, selectedItem = selectedName, onItemSelected = { selectedName = it })
